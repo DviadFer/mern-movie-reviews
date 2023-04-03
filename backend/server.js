@@ -2,7 +2,7 @@
 import express from 'express'
 import cors from 'cors'
 
-// moivie.route.js es un archivo separado que se usara luego para guardar las rutas.
+// movies.route.js es un archivo separado que almacena una solicitud HTTP. Actúa como un middleware
 import movies from './api/movies.route.js'
 
 //creación del server
@@ -21,7 +21,7 @@ app.use(express.json())
 /**
  * Ruta inicial:
  * La convención de URL para APIs comienza con /api/<número de versión> y, en este caso, la URL principal será localhost:5000/api/v1/movies. 
- * Las rutas específicas se definen en el segundo argumento, movies.
+ * La ruta específica se define en el segundo argumento, movies, importado arriba como si fuese un middleware.
  */
 app.use("/api/v1/movies", movies)
 
