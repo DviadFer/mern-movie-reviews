@@ -38,7 +38,11 @@ export default class MoviesDAO {
 
         if (filters) {
             if (filters.hasOwnProperty('title')) {
-                //Operadores de consulta $text y $search para buscar títulos de películas con términos de búsqueda del usuario, permitiendo consultas con múltiples palabras.
+                /**
+                 * Operadores de consulta $text y $search para buscar títulos de películas con términos de búsqueda del usuario, permitiendo consultas con múltiples palabras.
+                 * Se ha creado en MongoDB Atlas el indice de texto para el campo title del los documentos de la colección movies ej. {"title": "text"}
+                 * Un índice de texto permite realizar búsquedas de texto completo en ese campo mediante los operadores anteriormente mencionados
+                 */
                 query = { $text: { $search: filters['title']}}
             } else if (filters.hasOwnProperty('rated')) { 
                 //Verifica si el valor especificado por el usuario es igual al valor en el campo de la base de datos.
