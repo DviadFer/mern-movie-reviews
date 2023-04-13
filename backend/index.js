@@ -6,6 +6,7 @@ import app from './server.js'
 import mongodb from "mongodb"
 import dotenv from "dotenv"
 import MoviesDAO from './dao/moviesDAO.js'
+import ReviewsDAO from './dao/reviewsDAO.js'
 
 /**
  * Conexión con mongodb.MongoClient, controlador oficial de MongoDB para Node.js.
@@ -26,6 +27,8 @@ async function main(){
         await client.connect()
         //llamada al metodo injectDB() del DAO movies para crear la referecncia inicial de la colección movies de la bd
         await MoviesDAO.injectDB(client)
+        //llamada al metodo injectDB() del DAO reviews para crear la referecncia inicial de la colección reviews de la bd
+        await ReviewsDAO.injectDB(client)
 
         app.listen(port, () =>{console.log('server is running on port:'+port)})
     } catch (e) {
