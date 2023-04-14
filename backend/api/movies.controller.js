@@ -7,7 +7,8 @@ import MoviesDAO from '../dao/moviesDAO.js'
 export default class MoviesController {
 
     /**
-     * Gestiona el string query alamcenada como objeto en la petición (req.query)
+     * Gestiona el string query alamcenada como objeto en la petición (req.query). 
+     * Se modificara con un from de buscadro y diferentes desplegables de la pagina de incio.
      * Ej. api/v1/movies?title=dragon&moviesPerPage=15&page=0
      */
     static async apiGetMovies (req,res,next) {
@@ -43,4 +44,42 @@ export default class MoviesController {
         //Transformamo el objeto response en json para gestionar luego en el frontend
         res.json(response)
     }
+
+    /**
+     * Para hace GET de una pelicula concreta a traves del id proporcionado como parámetro en la req
+     * Ej. localhost:5000/api/v1/movies/id/12345 (diferente param de query porque no es ?id=12345)
+     */
+    static async apiGetMovieById (req,res,next){
+        try{
+            let id = req.params.id || {} //Si no existe pasamos el objeto vacío
+
+            //Se realiza la consulta a la bd en el DAO de movies
+            let movie = await MoviesDAO.getMovieById(id)
+
+            //Si es {} o no exite el id
+            if (!movie) {
+                res.status(404).json({ error: "not found"})
+                return
+            }
+            res.json(movie)
+        } catch (e) {
+            console.log(`api, ${e}`)
+            res.status(500).json({error: e})
+        }
+    }
+
+    /**
+     * No lleva ni query, ni para ni datos en el body de la req.
+     * Simplemente si accedemos a la ruta de la review, se ejecuatará desde la DAO la consulta getRatings()
+     */
+    static async apiGetRatings (req,res,next){
+        try{
+            let propertyTypes = await MoviesDAO.getRatings()
+            res.json(propertyTypes)
+        } catch (e) {
+            console.log(`api,${e}`)
+            res.status(500).json({error: e})
+        }
+    }
+        
 }

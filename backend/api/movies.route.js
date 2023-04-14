@@ -9,7 +9,11 @@ import ReviewsController from './reviews.controller.js'
 const router = express.Router() 
 
 // router.route() definela ruta, luego establecemos el metodo (en este caso get) y seguimos la convencion estandar de Express para definirlo.
-router.route('/').get(MoviesController.apiGetMovies) // Ruta de testeo para '/'
+router.route('/').get(MoviesController.apiGetMovies) 
+
+//gets extra para single movie por id y para movies según sus ratings
+router.route("/id/:id").get(MoviesController.apiGetMovieById)
+router.route("/ratings").get(MoviesController.apiGetRatings)
 
 /**
  * La ruta '/review' maneja las solicitudes http de tipo post, put y delete, todas dentro de esta única ruta de llamada. 
