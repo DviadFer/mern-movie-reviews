@@ -1,3 +1,5 @@
+import mongodb from "mongodb"
+const ObjectId = mongodb.ObjectId
 /**
  * Un DAO es un patrón de diseño que ofrece una capa de abstracción entre la aplicación y la base de datos,
  * permitiendo separar las operaciones específicas de datos y proporcionar una interfaz estandarizada para su manejo.
@@ -45,7 +47,7 @@ export default class MoviesDAO {
                  */
                 query = { $text: { $search: filters['title']}}
             } else if (filters.hasOwnProperty('rated')) { 
-                //Verifica si el valor especificado por el usuario es igual al valor en el campo de la base de datos.
+                //Verifica si el valor especificado por el usuario es igual al valor en el campo de la base de datos. Busca las pelis que el campo rated coincida con el ?rated=
                 query = { "rated": filters['rated']}
             }
         }
@@ -73,4 +75,41 @@ export default class MoviesDAO {
             return { moviesList: [], totalNumMovies: 0}
         }
     }
+
+    /**
+     * Devuelve una lista de todos los tipo de rating de las películas.
+     * El método distinct() devuelve una lista de valores únicos del campo especificado, obtenidos de los documentos de la colección.
+     * Será cuando cliquemos en uno de ellas, cuando pasaremos el dato como req.query para ejecutar la ruta '/'
+     */
+    static async getRatings () {
+        let ratings = []
+        try {
+            ratings = await movies.distinct("rated")
+            return ratings
+        } catch (e) {
+            console.error(`unable to get ratings, $(e)`)
+            return ratings
+        }
+    }
+
+    static async getMovieById(id){
+        try{
+            //agregate() es un método del paquete mongodb que permite secuenciar varias consultas. En este caso dos:
+            return await movies.aggregate([
+                //$match para seleccionar la peli que coincida con el id del param
+                { $match: { _id: new ObjectId(id) }},
+                //$lookup para hacer un JOIN con sus respectivas reviews en la colección reviews y juntarla todo en único objeto
+                { $lookup: {
+                    from: 'reviews',
+                    localField: '_id',
+                    foreignField: 'movie_id',
+                    as: 'reviews',
+                }}
+            ]).next()
+        } catch (e) {
+            console.error(`something went wrong in getMovieById: ${e}`)
+            throw e
+        }
+    }
+
 }
