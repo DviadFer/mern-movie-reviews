@@ -7,8 +7,22 @@ import Login from "./components/login"
 
 function App() {
 
+  let user = false
+
   return (
-    <div>Hello world</div>
+    <>
+      <nav>
+          <div>Meteor Reviews</div>
+          <div><Link to={"/movies"}>Movies</Link></div>
+          <div>
+            { user ? (
+              <a>Logout User</a>
+            ) : (
+              <Link to={"/login"}>Login</Link>
+            )}
+          </div>
+      </nav>
+    </>
   )
 }
 
