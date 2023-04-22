@@ -1,0 +1,29 @@
+.navbar {
+    background-color: #303134;
+    margin-bottom: 25px;
+
+    .wrapper {
+        max-width: 1200px;
+        margin: auto;
+        padding: 10px 20px;
+        display: flex;
+        align-items: baseline;
+        gap: 15px;
+
+        div:first-child {
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+    
+        div:nth-child(2) {
+            margin-left: auto;
+        }
+    }
+
+}
+
+.main {
+    max-width: 1200px;
+    margin: auto;
+    padding: 0 20px;
+}
