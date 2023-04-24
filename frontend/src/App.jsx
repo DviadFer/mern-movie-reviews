@@ -1,6 +1,8 @@
-import { Switch, Route, Link } from "react-router-dom"
+import { Switch, Route } from "react-router-dom"
 import { useState } from "react"
 
+
+import Navbar from "./common/navbar"
 import AddReview from "./components/add-review"
 import MovieSingle from "./components/movie-single"
 import MoviesList from "./components/movie-list"
@@ -15,26 +17,14 @@ function App() {
   async function login(user = null) {// default user to null
     setUser(user)
   }
+
   async function logout() {
     setUser(null)
   }
 
   return (
     <>
-      <nav className={styles.navbar}>
-          <div className={styles.wrapper}>
-            <div>Meteor Reviews</div>
-            <div><Link to={"/movies"}>Movies</Link></div>
-            <div>
-              { user ? (
-                <a onClick={logout}>Logout User</a>
-              ) : (
-                <Link to={"/login"}>Login</Link>
-              )}
-            </div>
-          </div>
-      </nav>
-
+      <Navbar user={user} logout={logout}></Navbar>
       <main className={styles.main}>
         <Switch>
           <Route exact path={["/", "/movies"]} component={MoviesList}></Route>
