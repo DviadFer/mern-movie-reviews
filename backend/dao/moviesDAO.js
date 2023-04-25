@@ -36,7 +36,8 @@ export default class MoviesDAO {
     } = {}) {
         
         //Definimos una query según los filtros que entren por el argumento del método
-        let query
+        let query = { "poster": { $ne: undefined } }
+        let applySort = true
 
         if (filters) {
             if (filters.hasOwnProperty('title')) {
@@ -46,6 +47,7 @@ export default class MoviesDAO {
                  * Un índice de texto permite realizar búsquedas de texto completo en ese campo mediante los operadores anteriormente mencionados
                  */
                 query = { $text: { $search: filters['title']}}
+                applySort = false
             } else if (filters.hasOwnProperty('rated')) { 
                 //Verifica si el valor especificado por el usuario es igual al valor en el campo de la base de datos. Busca las pelis que el campo rated coincida con el ?rated=
                 query = { "rated": filters['rated']}
@@ -61,9 +63,13 @@ export default class MoviesDAO {
 
         try{
             cursor = await movies
-            .find(query)
+            .find(query)          
             .limit(moviesPerPage) //Cada iteración se limita a las pelis por página establecidas anteriormente
             .skip(moviesPerPage * page) //Ej. Si esta en pagina 2, se salta los 20 primeros y te muestra a partir los siguientes 20
+
+            if (applySort) {
+                cursor = cursor.sort({ "released": -1 }) //Ordena por release solo si no se hace uso del buscador en el front
+            }
 
             //Return de los objetos array de las pelis + Número total de películas, contando el número de documentos en la consulta.
             const moviesList = await cursor.toArray()
