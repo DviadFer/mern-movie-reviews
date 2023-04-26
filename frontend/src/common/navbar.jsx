@@ -21,8 +21,8 @@ function Navbar({user, logout}) {
                     <p className={styles.text}>Meteor <span className={styles.accentColor}>reviews</span></p>
                 </div>
                 <ul className={`${styles.links} ${displayLinks ? styles.active : ''}`}>
-                    <li><Link to={"/movies"}>Movies</Link></li>
-                    <li>
+                    <li onClick={handleCick}><Link to={"/movies"}>Movies</Link></li>
+                    <li onClick={handleCick}>
                         { user 
                             ? (<a onClick={logout}>Logout</a>) 
                             : (<Link to={"/login"}>Login</Link>)

@@ -27,6 +27,7 @@
         .navButton {
             display: block;
             margin-left: auto;
+            cursor: pointer;
         }
         .links {
             list-style: none;
@@ -62,7 +63,7 @@
                     text-align: center;
                     height: 65px;
                     &:not(:last-child) {
-                        border-bottom: 5px solid #303134;
+                        border-bottom: 5px solid #222;
                     }
                     a {
                         display: grid;

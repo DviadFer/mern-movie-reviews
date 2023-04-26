@@ -1,0 +1,52 @@
+.searchBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+    form {
+        width: 100%;
+        display: flex;
+        align-items: stretch;
+        gap: 10px;
+        height: 40px;
+        @media (min-width: 550px) {
+            max-width: 250px;
+        }
+        input, select {
+            display: block;
+            width: calc(100% - 50px);
+            border-radius: 0;
+            border: none;
+            padding: 0 20px;
+            background-color: #444654;
+            color: white;
+            outline: none;
+        }
+        select {
+            option {
+                padding: 5px 20px;
+                &:hover, &:checked {
+                    background-color: #4F46E5;
+                }
+            }
+        }
+        button {
+            display: block;
+            width: 40px;
+            background-color: #4F46E5;
+            color: white;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    }
+}
+
+.movieList {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    column-gap: 40px;
+    row-gap: 50px;
+    margin: 40px 0;
+}

@@ -50,15 +50,16 @@ function MoviesList (props) {
     }
 
     //Cada vez que se modifiquen los form de busqueda, se guardara su valor en sus respectivos estados de search
-    const onChangeSearchTitle = (input) => {
-        const searchTitle = input.target.value
+    const onChangeSearchTitle = (event) => {
+        const searchTitle = event.target.value
         setSearchTitle(searchTitle)
     }
-    const onChangeSearchRating = (input) => {
-        const searchRating = input.target.value
+    const onChangeSearchRating = (event) => {
+        const searchRating = event.target.value
         setSearchRating(searchRating)
     }
 
+    //De manera similar a retrieveMovies, pero pasado las querys de los formularios
     const find =(query, by) =>{
         MovieDataService.find(query,by)
         .then(response =>{
@@ -70,10 +71,14 @@ function MoviesList (props) {
         })
     }
     
-    const findByTitle = () => {
+    //Funcion que hacen retrieve de los campos de los formularios cuando se presiona el boton Search
+    const findByTitle = (event) => {
+        //Para impedir que haga una petición GET por defecto
+        event.preventDefault();
         find(searchTitle, "title")
     }
-    const findByRating = () => {
+    const findByRating = (event) => {
+        event.preventDefault();
         if(searchRating === "All Ratings"){
             retrieveMovies()
         }
@@ -92,7 +97,7 @@ function MoviesList (props) {
                 <form>
                     <select onChange={onChangeSearchRating}>
                         {ratings.map(rating =>{
-                            <option value={rating}>{rating}</option>
+                            return <option key={rating} value={rating}>{rating}</option>
                         })}
                     </select>
                     <button onClick={findByRating}><FaSearch /></button>
@@ -100,14 +105,18 @@ function MoviesList (props) {
             </div>
             <div className={styles.movieList}>
                 {movies.map((movie) =>{
-                    <MovieCard 
-                        key={movie._id}
-                        imageSrc={movie.poster}
-                        title={movie.title}
-                        plot={movie.plot}
-                        rating={movie.rated}
-                        link={`/movies/${movie._id}`}
-                    />
+                    return (
+                        <MovieCard 
+                            key={movie._id}
+                            imageSrc={movie.poster}
+                            title={movie.title}
+                            plot={movie.plot}
+                            rating={movie.rated}
+                            score={movie.imdb.rating}
+                            date={movie.released}
+                            link={`/movies/${movie._id}`}
+                        />
+                    )
                 })}
             </div>
         </>

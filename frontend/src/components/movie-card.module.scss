@@ -1,0 +1,56 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    .imageWrapper {
+        width: 100%;
+        position: relative;
+        .rating {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: #4F46E5;
+            padding: 5px 10px;
+            font-weight: 600;
+            font-size: 12px;
+            width: fit-content;
+        }
+        .image {
+            display: block;
+            width: 100%;
+            object-fit: cover;
+            aspect-ratio: 2 / 3;
+        }
+    }
+    .title {
+        font-size: 1.25rem
+    }
+    .metaInfo {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        div:not(:first-child) {
+            opacity: 0.8;
+        }
+        .imdb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            svg {
+                color: #A5B4FC;
+            }
+            span {
+                opacity: 0.8;
+            }
+        }
+        .divisor {
+            width: 1px;
+            background-color: white;
+            height: 16px;
+        }
+    }
+    .plot {
+        font-size: 0.9rem;
+        text-align: justify;
+    }
+}
