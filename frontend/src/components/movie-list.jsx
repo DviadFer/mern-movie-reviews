@@ -104,7 +104,7 @@ function MoviesList (props) {
                 </form>
             </div>
             <div className={styles.movieList}>
-                {movies.map((movie) =>{
+                {movies.length != 0 ? movies.map((movie) =>{
                     return (
                         <MovieCard 
                             key={movie._id}
@@ -117,7 +117,7 @@ function MoviesList (props) {
                             link={`/movies/${movie._id}`}
                         />
                     )
-                })}
+                }) : 'No items'}
             </div>
         </>
     )

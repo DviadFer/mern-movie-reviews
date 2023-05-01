@@ -3,6 +3,7 @@ import { useState } from "react"
 
 
 import Navbar from "./common/navbar"
+import Footer from "./common/footer"
 import AddReview from "./components/add-review"
 import MovieSingle from "./components/movie-single"
 import MoviesList from "./components/movie-list"
@@ -39,6 +40,7 @@ function App() {
             }></Route>
         </Switch>
       </main>
+      <Footer />     
     </>
   )
 }
