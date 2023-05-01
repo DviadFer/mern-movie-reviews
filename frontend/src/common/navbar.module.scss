@@ -38,7 +38,7 @@
             font-weight: 600;
             li {
                 a {
-                    padding: 5px;
+                    padding: 5px 0 5px 5px;
                 }
             }
         }
@@ -50,9 +50,10 @@
                 margin: unset;
                 display: block;
                 position: fixed;
-                width: 200px;
-                top: 85px;
-                right: 5px;
+                top: 80px;
+                right: 0;
+                width: 100%;
+                max-width: 500px;
                 background-color: #444654;
                 transition: clip-path 0.25s ease-in-out;
                 clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
@@ -60,10 +61,11 @@
                     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
                 }
                 li {
+                    font-size: 18px;
                     text-align: center;
                     height: 65px;
                     &:not(:last-child) {
-                        border-bottom: 5px solid #222;
+                        border-bottom: 2px solid #222;
                     }
                     a {
                         display: grid;
