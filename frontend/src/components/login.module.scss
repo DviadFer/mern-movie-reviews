@@ -1,0 +1,58 @@
+.title {
+    margin-bottom: 50px;
+    @media (min-width: 501px) {
+        text-align: center;
+    }
+}
+
+.loginForm {
+    margin: auto;
+    max-width: 500px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 50px;
+    label {
+        display: flex;
+        align-items: baseline;
+        gap: 20px;
+        span {
+            display: block;
+            width: 80px;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        input {
+            flex: 1;
+            display: block;
+            border: 2px solid #A5B4FC;
+            background-color: transparent;
+            color: white;
+            outline: none;
+            padding: 10px;
+            &:focus {
+                outline: 2px solid;
+                outline-color: #4F46E5;
+                outline-offset: 4px;
+            }
+        }
+    }
+    button {
+        display: block;
+        clip-path: polygon(90% 0%, 100% 50%, 90% 100%, 0% 100%, 0 50%, 0% 0%);        
+        width: fit-content;
+        padding: 10px 50px 10px 35px;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        border: none;
+        background-color: #4F46E5;
+        color: white;
+        font-weight: 700;
+        cursor: pointer;
+        &:hover {
+            opacity: 0.8;
+        }
+        @media (min-width: 501px) {
+            margin-left: 100px;
+        }
+    }
+}

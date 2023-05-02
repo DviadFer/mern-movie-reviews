@@ -5,6 +5,9 @@ import styles from './movie-single.module.scss'
 import { FaStar, FaChevronRight } from 'react-icons/fa'
 
 const MovieSingle = props => {
+
+    console.log('Se puede observar dentro de la peli', props.user);
+
     //Definimos el objeto movie para rellenar despues de usar el servicio movies.js
     const [movie, setMovie] = useState({
         title: '',
@@ -92,7 +95,7 @@ const MovieSingle = props => {
                             <h5>{review.name + " reviewed on " + formatDate(review.date)}</h5>
                             <p>{review.review}</p>
                             {props.user && props.user.id === review.user_id &&
-                                <div className={stylesreviewActions}>
+                                <div className={styles.reviewActions}>
                                     <Link to={{pathname: `/movies/${props.match.params.id}/review`, state: {currentReview: review}}}>Edit</Link>
                                     <button>Delete</button>
                                 </div>
