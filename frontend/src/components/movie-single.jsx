@@ -75,9 +75,8 @@ const MovieSingle = props => {
                         )
                     })}
                 </div>
-                {/*true se cambiará por user.prop*/}
-                {true &&
-                    <Link className={styles.addReview} to={"/movies/" + props.match.params.id + "/review"}>
+                {props.user &&
+                    <Link className={styles.addReview} to={`/movies/${props.match.params.id}/review`}>
                         <span>Add Review</span>
                         <FaChevronRight />
                     </Link>
@@ -86,6 +85,22 @@ const MovieSingle = props => {
         </div>
         <div className={styles.reviewContainer}>
             <h2>Reviews</h2>
+            <div className={styles.reviewContainer}>
+                {movie.reviews.map((review, index) =>{
+                    return (
+                        <div key={`${review}-${index}`} className={styles.review}>
+                            <h5>{review.name + " reviewed on " + formatDate(review.date)}</h5>
+                            <p>{review.review}</p>
+                            {props.user && props.user.id === review.user_id &&
+                                <div className={stylesreviewActions}>
+                                    <Link to={{pathname: `/movies/${props.match.params.id}/review`, state: {currentReview: review}}}>Edit</Link>
+                                    <button>Delete</button>
+                                </div>
+                            }
+                        </div>
+                    )
+                })}
+            </div>
         </div>
         </>
     );
