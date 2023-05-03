@@ -15,8 +15,8 @@ const MovieSingle = props => {
         imdb : {
             rating: null
         },
-        genres: [],
-        cast: [],
+        genres: [''],
+        cast: [''],
         reviews: []
     })
 
@@ -35,6 +35,22 @@ const MovieSingle = props => {
     //Formato a la fecha
     const formatDate = (date) => {
         return date.split('T')[0]
+    }
+
+    //Llama al metodo deleteReview del servio para eliminar una review cuando pulsamos delete en el botón
+    const deleteReview = (reviewId, index) =>{
+        MovieDataService.deleteReview(reviewId, props.user.id)
+        .then(response => {
+            setMovie((prevState) => {
+                prevState.reviews.splice(index,1)
+                return({
+                    ...prevState
+                })
+            })
+        })
+        .catch(e =>{
+            console.log(e)
+        })
     }
 
     useEffect(()=>{
@@ -97,7 +113,7 @@ const MovieSingle = props => {
                             {props.user && props.user.id === review.user_id &&
                                 <div className={styles.reviewActions}>
                                     <Link to={{pathname: `/movies/${props.match.params.id}/review`, state: {currentReview: review}}}>Edit</Link>
-                                    <button>Delete</button>
+                                    <button onClick={() => deleteReview(review._id, index)}>Delete</button>
                                 </div>
                             }
                         </div>
