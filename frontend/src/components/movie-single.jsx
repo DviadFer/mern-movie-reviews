@@ -3,10 +3,10 @@ import MovieDataService from '../services/movies'
 import { Link } from 'react-router-dom'
 import styles from './movie-single.module.scss'
 import { FaStar, FaChevronRight } from 'react-icons/fa'
+import AddReview from './add-review'
 
 const MovieSingle = props => {
 
-    console.log('Se puede observar dentro de la peli', props.user);
 
     //Definimos el objeto movie para rellenar despues de usar el servicio movies.js
     const [movie, setMovie] = useState({
@@ -31,6 +31,12 @@ const MovieSingle = props => {
             console.log(e)
         })
     }
+
+    //Refresh component on update/creation of a review with AddReview component
+    const refreshMovieData = () => {
+        getMovie(props.match.params.id);
+    };
+    
 
     //Formato a la fecha
     const formatDate = (date) => {
@@ -95,10 +101,13 @@ const MovieSingle = props => {
                     })}
                 </div>
                 {props.user &&
-                    <Link className={styles.addReview} to={`/movies/${props.match.params.id}/review`}>
+                    <>
+                    <button className={styles.addReview} >
                         <span>Add Review</span>
                         <FaChevronRight />
-                    </Link>
+                    </button>
+                    <AddReview  {...props} refreshMovieData={refreshMovieData} />
+                    </>
                 }                
             </div>
         </div>
@@ -112,8 +121,9 @@ const MovieSingle = props => {
                             <p>{review.review}</p>
                             {props.user && props.user.id === review.user_id &&
                                 <div className={styles.reviewActions}>
-                                    <Link to={{pathname: `/movies/${props.match.params.id}/review`, state: {currentReview: review}}}>Edit</Link>
+                                    <button>Edit</button>
                                     <button onClick={() => deleteReview(review._id, index)}>Delete</button>
+                                    <AddReview  {...props} reviewEdit={review} refreshMovieData={refreshMovieData} />
                                 </div>
                             }
                         </div>

@@ -29,9 +29,6 @@ function App() {
       <main className={styles.main}>
         <Switch>
           <Route exact path={["/", "/movies"]} component={MoviesList}></Route>
-          <Route path="/movies/:id/review" render={
-            (props)=><AddReview {...props} user={user} />
-          }></Route>
           <Route path="/movies/:id/" render={
             (props)=><MovieSingle {...props} user={user} />
           }></Route>
