@@ -2,7 +2,7 @@ import {useState, useEffect} from 'react'
 import MovieDataService from '../services/movies'
 import { Link } from 'react-router-dom'
 import styles from './movie-single.module.scss'
-import { FaStar, FaChevronRight } from 'react-icons/fa'
+import { FaStar } from 'react-icons/fa'
 import AddReview from './add-review'
 
 const MovieSingle = props => {
@@ -19,6 +19,7 @@ const MovieSingle = props => {
         cast: [''],
         reviews: []
     })
+    
 
     //Definimos la funcion que usa get(id) del servicio como reslucion de la promise. Se activará en el use Effect
     const getMovie = id =>{
@@ -41,22 +42,6 @@ const MovieSingle = props => {
     //Formato a la fecha
     const formatDate = (date) => {
         return date.split('T')[0]
-    }
-
-    //Llama al metodo deleteReview del servio para eliminar una review cuando pulsamos delete en el botón
-    const deleteReview = (reviewId, index) =>{
-        MovieDataService.deleteReview(reviewId, props.user.id)
-        .then(response => {
-            setMovie((prevState) => {
-                prevState.reviews.splice(index,1)
-                return({
-                    ...prevState
-                })
-            })
-        })
-        .catch(e =>{
-            console.log(e)
-        })
     }
 
     useEffect(()=>{
@@ -101,35 +86,28 @@ const MovieSingle = props => {
                     })}
                 </div>
                 {props.user &&
-                    <>
-                    <button className={styles.addReview} >
-                        <span>Add Review</span>
-                        <FaChevronRight />
-                    </button>
-                    <AddReview  {...props} refreshMovieData={refreshMovieData} />
-                    </>
+                    <AddReview {...props} refreshMovieData={refreshMovieData} />
                 }                
             </div>
         </div>
+        <h2>Reviews</h2>
         <div className={styles.reviewContainer}>
-            <h2>Reviews</h2>
-            <div className={styles.reviewContainer}>
-                {movie.reviews.map((review, index) =>{
+            {console.log('Estado de las reviews', movie.reviews)}
+            {movie.reviews.length != 0 ? (
+                movie.reviews.map((review, index) =>{
                     return (
                         <div key={`${review}-${index}`} className={styles.review}>
                             <h5>{review.name + " reviewed on " + formatDate(review.date)}</h5>
                             <p>{review.review}</p>
                             {props.user && props.user.id === review.user_id &&
-                                <div className={styles.reviewActions}>
-                                    <button>Edit</button>
-                                    <button onClick={() => deleteReview(review._id, index)}>Delete</button>
-                                    <AddReview  {...props} reviewEdit={review} refreshMovieData={refreshMovieData} />
-                                </div>
+                                <AddReview  {...props} reviewEdit={review} refreshMovieData={refreshMovieData} />
                             }
                         </div>
                     )
-                })}
-            </div>
+                })
+            ) :(
+                <span>No reviews</span>
+            )}
         </div>
         </>
     );
