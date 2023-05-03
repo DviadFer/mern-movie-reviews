@@ -4,24 +4,26 @@ import { Link } from "react-router-dom"
 
 const AddReview = props => {
 
-    let editing = false
+    let editing = false //Por defecto estamos creando una nueva
     let initialReviewState = ""
 
-    //
+    //Si existe un state y un valor que se pasa al clickar en edit review con {Link}, entonces sabes que estamos editando
     if(props.location.state && props.location.state.currentReview){
-        editing = true
-        initialReviewState = props.location.state.currentReview.review
+        editing = true //Para el if de saveReview()
+        initialReviewState = props.location.state.currentReview.review //Para rellenar el value dentro del textarea con la review como valor inicial
     }
 
     const [review, setReview] = useState(initialReviewState)
     // Para mantener un seguimiento de si la review ha sido actualizada
     const [submitted, setSubmitted] = useState(false)
 
+    // para setear la review cada vez que actualizamos el textarea
     const onChangeReview = e => {
         const review = e.target.value
         setReview(review)
     }
 
+    //Manejado por el boton submit, 
     const saveReview = (e) => {
         e.preventDefault()
         var data = {
@@ -31,7 +33,7 @@ const AddReview = props => {
             movie_id: props.match.params.id // el id de la pelicula se saca directo de la url
         }
         if(editing){
-            // get existing review id
+            // Obtenemos el id de la review del state review que pasamos con {Link} del boton edit review
             data.review_id = props.location.state.currentReview._id
             MovieDataService.updateReview(data)
             .then(response =>{
