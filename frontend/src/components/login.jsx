@@ -19,7 +19,11 @@ const Login = props => {
     }
 
     const login = () => {
-        props.login({name: name, id: id})
+        if (name.toLowerCase() === 'arya stark') {
+            props.login({name: name, id: id})
+        } else {
+            props.login({name: 'Anonymous knight', id: id})
+        }
         props.history.push('/')
     }
 
