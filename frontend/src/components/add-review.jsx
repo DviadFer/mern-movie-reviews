@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import MovieDataService from "../services/movies"
-import { Link } from "react-router-dom"
 import styles from './add-review.module.scss'
 import { FaChevronRight, FaTimes, FaTrashAlt, FaPen, FaRedoAlt } from 'react-icons/fa'
 

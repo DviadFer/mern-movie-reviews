@@ -38,6 +38,11 @@ const MovieSingle = props => {
         getMovie(props.match.params.id);
     };
     
+    //Función para saber si en el array de reviews existe ya una correspondiente al usuario logueado
+    const userHasPostedReview = () => {
+        return movie.reviews.some(review => review.user_id === props.user.id);
+    }
+    
 
     //Formato a la fecha
     const formatDate = (date) => {
@@ -85,7 +90,7 @@ const MovieSingle = props => {
                         )
                     })}
                 </div>
-                {props.user &&
+                {props.user && !userHasPostedReview() &&
                     <AddReview {...props} refreshMovieData={refreshMovieData} />
                 }                
             </div>
@@ -96,16 +101,16 @@ const MovieSingle = props => {
             {movie.reviews.length != 0 ? (
                 movie.reviews.map((review, index) =>{
                     return (
-                        <div key={`${review}-${index}`} className={styles.review}>
+                        <div key={review._id} className={styles.review}>
                             <h5>{review.name + " reviewed on " + formatDate(review.date)}</h5>
                             <p>{review.review}</p>
                             {props.user && props.user.id === review.user_id &&
-                                <AddReview  {...props} reviewEdit={review} refreshMovieData={refreshMovieData} />
+                                <AddReview {...props} reviewEdit={review} refreshMovieData={refreshMovieData} />
                             }
                         </div>
                     )
                 })
-            ) :(
+            ) : (
                 <span>No reviews</span>
             )}
         </div>
