@@ -22,12 +22,13 @@ export default class ReviewsDAO {
     //Aquí estan creados los tres metodos que emplean las tres peticiones contempladas en el controlador de reviews
 
     //Como ya nos preocupamos en el controller de hacer los filtros, aquí simplemente realizamos la consulta de añadir review
-    static async addReview (movieId, user, review, date) {
+    static async addReview (movieId, user, picture, review, date) {
         try{
             //Damos formato a los datos para que coincida con los campos de un documento de la colección reviews
             const reviewDoc = {
                 name: user.name,
                 user_id: user._id,
+                user_picture: picture,
                 date: date,
                 review: review,
                 movie_id: new ObjectId(movieId) 

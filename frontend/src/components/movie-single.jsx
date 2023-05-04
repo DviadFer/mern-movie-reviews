@@ -101,9 +101,15 @@ const MovieSingle = props => {
             {movie.reviews.length != 0 ? (
                 movie.reviews.map((review, index) =>{
                     return (
-                        <div key={review._id} className={styles.review}>
-                            <h5>{review.name + " reviewed on " + formatDate(review.date)}</h5>
-                            <p>{review.review}</p>
+                        <div key={review._id} className={styles.reviewWrapper}>
+                            <div className={styles.authorWrapper}>
+                                <span>{review.name}</span>
+                                <span>{formatDate(review.date)}</span>
+                            </div>
+                            <div className={styles.speechBubble}>
+                                <img src={`${review.user_picture}`} alt="profile-pic" />
+                                <p>{review.review}</p>
+                            </div>
                             {props.user && props.user.id === review.user_id &&
                                 <AddReview {...props} reviewEdit={review} refreshMovieData={refreshMovieData} />
                             }
@@ -111,7 +117,7 @@ const MovieSingle = props => {
                     )
                 })
             ) : (
-                <span>No reviews</span>
+                <span>This film has no reviews yet. {props.user ? 'Be the first to write one!' : 'You need to be logged in to write one!'} </span>
             )}
         </div>
         </>

@@ -61,8 +61,7 @@
 .reviewForm {
     transition: all 0.25s linear;
     &.showForm {
-        height: 0px;
-        opacity: 0;
+        display: none;
     }
     textarea {
         display: block;

@@ -16,8 +16,10 @@ export default class ReviewsController {
             const review = req.body.review
             const userInfo = {
                 name: req.body.name,
-                _id: req.body.user_id
+                _id: req.body.user_id,
             }
+
+            const picture = `/avatar/${req.body.name.toLowerCase().replace(/ /g, "-")}.webp`
 
             // La fecha del post, que se crea en el momento que se ejecuta es función
             const date = new Date()
@@ -26,6 +28,7 @@ export default class ReviewsController {
             const ReviewResponse = await ReviewsDAO.addReview (
                 movieId,
                 userInfo,
+                picture,
                 review,
                 date
             )
