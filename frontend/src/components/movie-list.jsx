@@ -17,19 +17,28 @@ function MoviesList (props) {
     //Estado del placeholder del select de las reviews en su form respectivo
     const [ratings, setRatings] = useState(["All Ratings"])
 
+    //Estados para controlar la paginación
+    const [currentPage, setCurrentPage] = useState(0)
+
     //useEffect se ejecuta cuando se termina de renderizar el componente. Ponemos [] como segundo argumento porque queremos que se llame 1 vez
     useEffect(() =>{
         retrieveMovies()
         retrieveRatings()
     },[])
 
+    //Use effect
+    useEffect(() =>{
+        retrieveMovies()
+    },[currentPage])
+
     //Uso del getAll() del servicio. Ponemos un try catch para debug en consola
     const retrieveMovies = () => {
-        MovieDataService.getAll()
+        MovieDataService.getAll(currentPage)
         .then(response =>{
             console.log(response.data)
             //Usamos el useState de movies para popular el array con response.data.movies
             setMovies(response.data.movies)
+            setCurrentPage(response.data.page)
         })
         .catch( e => {
             console.log(e)
@@ -118,6 +127,15 @@ function MoviesList (props) {
                         />
                     )
                 }) : 'No items'}
+            </div>
+            <div className={styles.pagination}>
+                <button onClick={() => {setCurrentPage(currentPage - 1)}}>
+                    Get previous
+                </button>
+                <span>Showing page: {currentPage + 1}</span>
+                <button onClick={() => {setCurrentPage(currentPage + 1)}}>
+                    Get next
+                </button>
             </div>
         </>
     )
