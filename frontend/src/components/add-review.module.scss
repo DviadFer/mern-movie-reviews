@@ -1,7 +1,6 @@
 .addButton {
     margin-bottom: 15px;
     display: block;
-    clip-path: polygon(90% 0%, 100% 50%, 90% 100%, 0% 100%, 0 50%, 0% 0%);
     width: 150px;
     padding: 10px 15px;
     display: flex;
@@ -61,6 +60,7 @@
 
 .reviewForm {
     transition: all 0.25s linear;
+    scroll-snap-align: center;
     &.showForm {
         display: none;
     }
