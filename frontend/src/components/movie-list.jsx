@@ -19,6 +19,8 @@ function MoviesList (props) {
 
     //Estados para controlar la paginación
     const [currentPage, setCurrentPage] = useState(0)
+    //Estado para determinar el estado de la busqueda durante las paginaciones
+    const [currentSearchMode, setCurrentSearchMode] = useState("")
 
     //useEffect se ejecuta cuando se termina de renderizar el componente. Ponemos [] como segundo argumento porque queremos que se llame 1 vez
     useEffect(() =>{
@@ -26,14 +28,31 @@ function MoviesList (props) {
         retrieveRatings()
     },[])
 
-    //Use effect
+    const retrieveNextPage = () => {
+        if(currentSearchMode === "findByTitle")
+            findByTitle()
+        else if(currentSearchMode === "findByRating")
+            findByRating()
+        else
+            retrieveMovies()
+    }
+
+    //Cada vez que actualizamos la busqueda (titulo o rating) reseteamos al paginación
     useEffect(() =>{
-        retrieveMovies()
+        setCurrentPage(0)
+    },[currentSearchMode])
+
+    //Use effect para retrieve the movies cada vez que se actualice currentPage
+    useEffect(() =>{
+        retrieveNextPage()
     },[currentPage])
+
+
 
     //Uso del getAll() del servicio. Ponemos un try catch para debug en consola
     const retrieveMovies = () => {
-        MovieDataService.getAll(currentPage)
+        setCurrentSearchMode("")
+        MovieDataService.getAll(currentPage) //Pasamos la pagina actual a la query
         .then(response =>{
             console.log(response.data)
             //Usamos el useState de movies para popular el array con response.data.movies
@@ -70,7 +89,7 @@ function MoviesList (props) {
 
     //De manera similar a retrieveMovies, pero pasado las querys de los formularios
     const find =(query, by) =>{
-        MovieDataService.find(query,by)
+        MovieDataService.find(query,by,currentPage)
         .then(response =>{
             console.log(response.data)
             setMovies(response.data.movies)
@@ -82,17 +101,21 @@ function MoviesList (props) {
     
     //Funcion que hacen retrieve de los campos de los formularios cuando se presiona el boton Search
     const findByTitle = (event) => {
+        setCurrentSearchMode("findByTitle")
         //Para impedir que haga una petición GET por defecto
-        event.preventDefault();
+        if (event) {event.preventDefault()}
         find(searchTitle, "title")
+        setCurrentPage(0)
     }
     const findByRating = (event) => {
-        event.preventDefault();
+        setCurrentSearchMode("findByRating")
+        if (event) {event.preventDefault()}
         if(searchRating === "All Ratings"){
             retrieveMovies()
         }
         else{
             find(searchRating, "rated")
+            setCurrentPage(0)
         }
     }
 
