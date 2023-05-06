@@ -3,7 +3,7 @@ import MovieDataService from "../services/movies"
 import MovieCard from './movie-card'
 
 
-import { FaSearch } from 'react-icons/fa'
+import { FaSearch, FaCaretRight, FaCaretLeft } from 'react-icons/fa'
 import styles from './movie-list.module.scss'
 
 
@@ -17,8 +17,10 @@ function MoviesList (props) {
     //Estado del placeholder del select de las reviews en su form respectivo
     const [ratings, setRatings] = useState(["All Ratings"])
 
-    //Estados para controlar la paginación
+    //Estados para controlar la paginación y los resultados totales
     const [currentPage, setCurrentPage] = useState(0)
+    const [totalResults, setTotalResults] = useState(0)
+
     //Estado para determinar el estado de la busqueda durante las paginaciones
     const [currentSearchMode, setCurrentSearchMode] = useState("")
 
@@ -37,11 +39,6 @@ function MoviesList (props) {
             retrieveMovies()
     }
 
-    //Cada vez que actualizamos la busqueda (titulo o rating) reseteamos al paginación
-    useEffect(() =>{
-        setCurrentPage(0)
-    },[currentSearchMode])
-
     //Use effect para retrieve the movies cada vez que se actualice currentPage
     useEffect(() =>{
         retrieveNextPage()
@@ -50,14 +47,15 @@ function MoviesList (props) {
 
 
     //Uso del getAll() del servicio. Ponemos un try catch para debug en consola
-    const retrieveMovies = () => {
+    const retrieveMovies = (reset = false) => {
+        if (reset) { setCurrentPage(0) }
         setCurrentSearchMode("")
         MovieDataService.getAll(currentPage) //Pasamos la pagina actual a la query
         .then(response =>{
-            console.log(response.data)
             //Usamos el useState de movies para popular el array con response.data.movies
             setMovies(response.data.movies)
             setCurrentPage(response.data.page)
+            setTotalResults(response.data.total_results)
         })
         .catch( e => {
             console.log(e)
@@ -91,8 +89,9 @@ function MoviesList (props) {
     const find =(query, by) =>{
         MovieDataService.find(query,by,currentPage)
         .then(response =>{
-            console.log(response.data)
             setMovies(response.data.movies)
+            console.log(response.data.total_results)
+            setTotalResults(response.data.total_results)
         })
         .catch(e =>{
             console.log(e)
@@ -100,14 +99,19 @@ function MoviesList (props) {
     }
     
     //Funcion que hacen retrieve de los campos de los formularios cuando se presiona el boton Search
-    const findByTitle = (event) => {
+    const findByTitle = (event, reset = false) => {
+        if (reset) { setCurrentPage(0) }
         setCurrentSearchMode("findByTitle")
         //Para impedir que haga una petición GET por defecto
         if (event) {event.preventDefault()}
-        find(searchTitle, "title")
-        setCurrentPage(0)
+        if (searchTitle === "") {
+            retrieveMovies()
+        } else {
+            find(searchTitle, "title")
+        }
     }
-    const findByRating = (event) => {
+    const findByRating = (event, reset = false) => {
+        if (reset) { setCurrentPage(0) }
         setCurrentSearchMode("findByRating")
         if (event) {event.preventDefault()}
         if(searchRating === "All Ratings"){
@@ -115,7 +119,6 @@ function MoviesList (props) {
         }
         else{
             find(searchRating, "rated")
-            setCurrentPage(0)
         }
     }
 
@@ -124,7 +127,7 @@ function MoviesList (props) {
             <div className={styles.searchBar}>
                 <form>
                     <input type="text" placeholder='Search by title' value={searchTitle} onChange={onChangeSearchTitle}/>
-                    <button onClick={findByTitle}><FaSearch /></button>
+                    <button onClick={(e) => findByTitle(e, true)}><FaSearch /></button>
                 </form>
                 <form>
                     <select onChange={onChangeSearchRating}>
@@ -132,7 +135,7 @@ function MoviesList (props) {
                             return <option key={rating} value={rating}>{rating}</option>
                         })}
                     </select>
-                    <button onClick={findByRating}><FaSearch /></button>
+                    <button onClick={(e) => findByRating(e, true)}><FaSearch /></button>
                 </form>
             </div>
             <div className={styles.movieList}>
@@ -151,15 +154,20 @@ function MoviesList (props) {
                     )
                 }) : 'No items'}
             </div>
-            <div className={styles.pagination}>
-                <button onClick={() => {setCurrentPage(currentPage - 1)}}>
-                    Get previous
-                </button>
-                <span>Showing page: {currentPage + 1}</span>
-                <button onClick={() => {setCurrentPage(currentPage + 1)}}>
-                    Get next
-                </button>
-            </div>
+            { totalResults > 20 &&
+                <div className={styles.pagination}>
+                    {(currentPage + 1) != 1 &&
+                        <FaCaretLeft onClick={() => {setCurrentPage(currentPage - 1); window.scrollTo({top: 0, behavior: 'smooth'})}} />
+                    }
+                    <div className={styles.currentPage}>{currentPage + 1}</div>
+                    {((currentPage + 1) * 20) <= totalResults &&
+                        <FaCaretRight onClick={() => {setCurrentPage(currentPage + 1); window.scrollTo({top: 0, behavior: 'smooth'})}} />
+                    }
+                    {(currentPage + 1) != 1 &&
+                        <div className={styles.reset} onClick={() => {setCurrentPage(0); window.scrollTo({top: 0, behavior: 'smooth'})}}>Reset</div>
+                    }
+                </div>
+            }
         </>
     )
 }
