@@ -8,6 +8,7 @@ import AddReview from "./components/add-review"
 import MovieSingle from "./components/movie-single"
 import MoviesList from "./components/movie-list"
 import Login from "./components/login"
+import Tutorial from "./components/tutorial"
 
 import styles from './App.module.scss'
 
@@ -31,6 +32,9 @@ function App() {
           <Route exact path={["/", "/movies"]} component={MoviesList}></Route>
           <Route path="/movies/:id/" render={
             (props)=><MovieSingle {...props} user={user} />
+          }></Route>
+          <Route path="/tutorial" render={
+            (props)=><Tutorial {...props} user={user} />
           }></Route>
           <Route path="/login" render={
             (props)=><Login {...props} login={login} />

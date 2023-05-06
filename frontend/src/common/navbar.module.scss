@@ -42,6 +42,17 @@
                     padding: 5px 0 5px 5px;
                 }
             }
+            .login {
+                display: flex;
+                align-items: center;
+                gap: 25px;
+                img {
+                    display: block;
+                    width: 45px;
+                    border-radius: 50%;
+                    cursor: default;
+                }
+            }
         }
         .navButton {
             display: none;
@@ -72,6 +83,12 @@
                         display: grid;
                         place-content: center;
                         height: 100%;
+                    }
+                }
+                .login {
+                    justify-content: center;
+                    img {
+                        display: none;
                     }
                 }
             }

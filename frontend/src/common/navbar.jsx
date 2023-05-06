@@ -24,10 +24,17 @@ function Navbar({user, logout}) {
                 </Link>
                 <ul className={`${styles.links} ${displayLinks ? styles.active : ''}`}>
                     <li onClick={handleCick}><Link to={"/movies"}>Movies</Link></li>
-                    <li onClick={handleCick}>
+                    <li onClick={handleCick}><Link to={"/tutorial"}>Tutorial</Link></li>
+                    <li className={styles.login} onClick={handleCick}>
                         { user 
-                            ? (<a onClick={logout}>Logout</a>) 
-                            : (<Link to={"/login"}>Login</Link>)
+                            ? (<>
+                                <a onClick={logout}>Logout </a>
+                                <img src={`/avatar/${user.name.toLowerCase().replace(/ /g, "-")}.webp`} alt="profile" />
+                            </>
+                            ) : (<Link to={"/login"}>
+                                <span>Login</span>
+                                
+                            </Link>)
                         }
                     </li>                   
                 </ul>

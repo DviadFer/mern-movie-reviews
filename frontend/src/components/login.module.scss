@@ -1,7 +1,25 @@
 .title {
-    margin-bottom: 50px;
+    margin-bottom: 25px;
     @media (min-width: 501px) {
         text-align: center;
+    }
+}
+
+.tip {
+    margin: auto;
+    max-width: 500px;
+    padding: 25px;
+    background-color: #303134;
+    margin-bottom: 25px;
+    .text {
+        p:last-child {
+            margin-top: 1rem;
+        }
+    }
+    svg {
+        float: left;
+        font-size: 20px;
+        margin-right: 5px;
     }
 }
 

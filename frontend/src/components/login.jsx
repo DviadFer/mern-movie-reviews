@@ -1,5 +1,6 @@
 import {useState} from 'react'
 import styles from './login.module.scss'
+import {FaInfoCircle} from 'react-icons/fa'
 
 const Login = props => {
 
@@ -30,6 +31,13 @@ const Login = props => {
     return (
         <>
             <h1 className={styles.title}>Login</h1>
+            <div className={styles.tip}>
+                <div className={styles.text}>
+                    <FaInfoCircle/>
+                    <p>Use the <strong>test user "Arya Stark" with the ID "1234"</strong>. If you enter another name/ID, your reviews will be registered as "Anonymous knight".</p>
+                    <p>Don't forget to <strong>remember your ID for future logins</strong> and to edit your reviews with the same user.</p>
+                </div>
+            </div>
             <form className={styles.loginForm}>
                 <label>
                     <span>Username</span>

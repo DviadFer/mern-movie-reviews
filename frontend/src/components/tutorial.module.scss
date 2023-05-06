@@ -1,0 +1,33 @@
+.tutorial {
+    h1 {
+        margin-bottom: 25px;
+    }
+    p {
+        margin-bottom: 1rem;
+        .gradient {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #A5B4FC;
+            border-bottom: 2px solid #4F46E5;
+        }
+    }
+    .featureList {
+        margin: 25px 0;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 25px;
+        > div {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background-color: #303134;
+            padding: 20px;
+            svg {
+                min-width: 40px;
+                font-size: 30px;
+                color: #A5B4FC;
+            }
+        }
+    }
+    
+}
