@@ -1,13 +1,11 @@
 import { Switch, Route } from "react-router-dom"
 import { useState } from "react"
-
 import Navbar from "./common/navbar"
 import Footer from "./common/footer"
 import MovieSingle from "./components/movie-single"
 import MoviesList from "./components/movie-list"
 import Login from "./components/login"
 import Tutorial from "./components/tutorial"
-
 import styles from './App.module.scss'
 
 function App() {
