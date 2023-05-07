@@ -133,7 +133,7 @@ function MoviesList (props) {
                             link={`/movies/${movie._id}`}
                         />
                     )
-                }) : 'No items'}
+                }) : 'No films available at the moment...'}
             </div>
             { totalResults > 20 &&
                 <div className={styles.pagination}>

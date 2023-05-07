@@ -86,9 +86,11 @@
                     }
                 }
                 .login {
+                    flex-direction: row-reverse;
                     justify-content: center;
+                    gap: 5px;
                     img {
-                        display: none;
+                        width: 30px;
                     }
                 }
             }
