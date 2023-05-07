@@ -83,14 +83,13 @@
                         display: grid;
                         place-content: center;
                         height: 100%;
+                        width: 100%;
                     }
                 }
                 .login {
-                    flex-direction: row-reverse;
                     justify-content: center;
-                    gap: 5px;
                     img {
-                        width: 30px;
+                        display: none;
                     }
                 }
             }
@@ -106,4 +105,3 @@
         }
     }
 }
-

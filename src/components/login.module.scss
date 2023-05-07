@@ -8,18 +8,20 @@
 .tip {
     margin: auto;
     max-width: 500px;
-    padding: 25px;
+    padding: 20px;
     background-color: #303134;
     margin-bottom: 25px;
     .text {
         p:last-child {
             margin-top: 1rem;
+            line-height: 1.5rem;
         }
     }
     svg {
+        font-size: 25px;
         float: left;
-        font-size: 20px;
-        margin-right: 5px;
+        shape-outside: circle(50%);
+        margin-right: 20px;
     }
 }
 
