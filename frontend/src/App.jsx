@@ -1,10 +1,8 @@
 import { Switch, Route } from "react-router-dom"
 import { useState } from "react"
 
-
 import Navbar from "./common/navbar"
 import Footer from "./common/footer"
-import AddReview from "./components/add-review"
 import MovieSingle from "./components/movie-single"
 import MoviesList from "./components/movie-list"
 import Login from "./components/login"
@@ -16,7 +14,7 @@ function App() {
 
   const [user, setUser] = useState(null)
 
-  async function login(user = null) {// default user to null
+  async function login(user = null) {
     setUser(user)
   }
 

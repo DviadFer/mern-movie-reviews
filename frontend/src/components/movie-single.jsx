@@ -7,8 +7,6 @@ import AddReview from './add-review'
 
 const MovieSingle = props => {
 
-
-    //Definimos el objeto movie para rellenar despues de usar el servicio movies.js
     const [movie, setMovie] = useState({
         title: '',
         fullplt: '',
@@ -20,8 +18,6 @@ const MovieSingle = props => {
         reviews: []
     })
     
-
-    //Definimos la funcion que usa get(id) del servicio como reslucion de la promise. Se activará en el use Effect
     const getMovie = id =>{
         MovieDataService.get(id)
         .then(response => {
@@ -33,26 +29,21 @@ const MovieSingle = props => {
         })
     }
 
-    //Refresh component on update/creation of a review with AddReview component
     const refreshMovieData = () => {
-        getMovie(props.match.params.id);
-    };
-    
-    //Función para saber si en el array de reviews existe ya una correspondiente al usuario logueado
-    const userHasPostedReview = () => {
-        return movie.reviews.some(review => review.user_id === props.user.id);
+        getMovie(props.match.params.id)
     }
     
-
-    //Formato a la fecha
+    const userHasPostedReview = () => {
+        return movie.reviews.some(review => review.user_id === props.user.id)
+    }
+    
     const formatDate = (date) => {
         return date.split('T')[0]
     }
 
     useEffect(()=>{
-        //props.match.params es la sintáxis que usamos para acceder a los parmaetros dinámicos asociados desde la url
         getMovie(props.match.params.id)
-    },[props.match.params.id]) //[] si esta vacio hace que solo se active una vez, como no es así, se activará cada vez que el id cambie
+    },[props.match.params.id]) 
 
     return (
         <>
@@ -60,7 +51,7 @@ const MovieSingle = props => {
             <div className={styles.imageWrapper}>
                 <div className={`${movie.rated ? styles.rating : ''}`}>{movie.rated}</div>
                 <img className={styles.image} src={`${movie.poster}`} alt="movie-img" onError={({ currentTarget }) => {
-                    currentTarget.onerror = null // prevents looping
+                    currentTarget.onerror = null 
                     currentTarget.src="/image-not-found.webp"
                 }}/>
             </div>
@@ -121,7 +112,7 @@ const MovieSingle = props => {
             )}
         </div>
         </>
-    );
+    )
 }
 
 export default MovieSingle

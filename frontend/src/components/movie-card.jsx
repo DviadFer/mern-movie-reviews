@@ -5,10 +5,9 @@ import { FaStar } from "react-icons/fa"
 function MovieCard ({imageSrc, title, plot = 'Plot unavailable', score, date, rating, link}) {
 
     const truncatePlot = (plot, wordLimit = 20) => {
-        let words = plot.split(' ') // Se divide el texto en un array de palabras
-        let trimmedWords = words.slice(0, wordLimit) // Se obtienen las primeras 20 palabras
-        let trimmedPlot = trimmedWords.join(' ') + '...' // Se unen las palabras y se agrega el indicador de truncamiento
-
+        let words = plot.split(' ') 
+        let trimmedWords = words.slice(0, wordLimit) 
+        let trimmedPlot = trimmedWords.join(' ') + '...' 
         return trimmedPlot
     }
 

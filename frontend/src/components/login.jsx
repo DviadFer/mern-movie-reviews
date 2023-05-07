@@ -8,15 +8,13 @@ const Login = props => {
     const [id, setId] = useState("")
 
     const onChangeName = e => {
-        // e.preventDefault()
         const name = e.target.value
-        setName(name);
+        setName(name)
     }
 
     const onChangeId = e => {
-        // e.preventDefault()
         const id = e.target.value
-        setId(id);
+        setId(id)
     }
 
     const login = () => {

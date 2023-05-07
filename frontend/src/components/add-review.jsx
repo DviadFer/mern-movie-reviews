@@ -5,45 +5,36 @@ import { FaChevronRight, FaTimes, FaTrashAlt, FaPen, FaRedoAlt } from 'react-ico
 
 const AddReview = props => {
 
-    let editing = false //Por defecto estamos creando una nueva
+    let editing = false 
     let initialReviewState = ""
 
-    //Si existe un state y un valor que se pasa al clickar en edit review con {Link}, entonces sabes que estamos editando
     if(props.reviewEdit){
-        editing = true //Para el if de saveReview()
-        initialReviewState = props.reviewEdit.review //Para rellenar el value dentro del textarea con la review como valor inicial
+        editing = true 
+        initialReviewState = props.reviewEdit.review 
     }
 
-    //Para setear el valor del textarea
     const [review, setReview] = useState(initialReviewState)
-
-    //Para mostrar o no el textarea según pulsemos el botón superior de edit o crear
     const [showForm, updateShowForm] = useState(true)
 
     const handleShowForm = (e = null) => {
-        if (e) {
-            e.preventDefault()
-        }
+        if (e) {e.preventDefault()}
         updateShowForm(!showForm)
     }
 
-    // para setear la review cada vez que actualizamos el textarea
     const onChangeReview = e => {
         const review = e.target.value
         setReview(review)
     }
 
-    //Manejado por el boton submit, 
     const saveReview = (e) => {
         e.preventDefault()
         let data = {
             review: review,
             name: props.user.name,
             user_id: props.user.id,
-            movie_id: props.match.params.id // el id de la pelicula se saca directo de la url
+            movie_id: props.match.params.id 
         }
-        if(editing){
-            // Obtenemos el id de la review del state review que pasamos con {Link} del boton edit review
+        if (editing) {
             data.review_id = props.reviewEdit._id
             MovieDataService.updateReview(data)
             .then(response =>{
@@ -68,13 +59,12 @@ const AddReview = props => {
         }
     }
 
-    //Llama al metodo deleteReview del servio para eliminar una review cuando pulsamos delete
     const deleteReview = () =>{
         let data = {
             review: review,
             name: props.user.name,
             user_id: props.user.id,
-            movie_id: props.match.params.id // el id de la pelicula se saca directo de la url
+            movie_id: props.match.params.id
         }
         data.review_id = props.reviewEdit._id
         MovieDataService.deleteReview(data.review_id, props.user.id)

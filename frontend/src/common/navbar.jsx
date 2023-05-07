@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom/cjs/react-router-dom.min"
-import { useState } from "react";
+import { useState } from "react"
 import styles from './navbar.module.scss'
-import { FaBars, FaTimes } from 'react-icons/fa';
+import { FaBars, FaTimes } from 'react-icons/fa'
 
 function Navbar({user, logout}) {
 
