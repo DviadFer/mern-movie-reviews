@@ -4,6 +4,7 @@
     }
     p {
         margin-bottom: 1rem;
+        line-height: 1.6rem;
         .gradient {
             font-weight: 700;
             font-size: 1.1rem;
@@ -26,6 +27,17 @@
                 min-width: 40px;
                 font-size: 25px;
                 color: #A5B4FC;
+            }
+        }
+        @media (max-width: 767px) {
+            > div {
+                display: block;
+                padding: 30px 20px;
+                svg {
+                    float: left;
+                    margin-right: 20px;
+                    shape-outside: circle(50%);
+                }
             }
         }
     }

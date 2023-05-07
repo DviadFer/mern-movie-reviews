@@ -23,17 +23,16 @@ function Navbar({user, logout}) {
                     </div>
                 </Link>
                 <ul className={`${styles.links} ${displayLinks ? styles.active : ''}`}>
-                    <li onClick={handleCick}><Link to={"/movies"}>Movies</Link></li>
-                    <li onClick={handleCick}><Link to={"/tutorial"}>Tutorial</Link></li>
+                    <li onClick={handleCick}><Link onClick={() => window.scrollTo({top: 0})} to={"/movies"}>Movies</Link></li>
+                    <li onClick={handleCick}><Link onClick={() => window.scrollTo({top: 0})} to={"/tutorial"}>Tutorial</Link></li>
                     <li className={styles.login} onClick={handleCick}>
                         { user 
                             ? (<>
                                 <a onClick={logout}>Logout </a>
                                 <img src={`/avatar/${user.name.toLowerCase().replace(/ /g, "-")}.webp`} alt="profile" />
                             </>
-                            ) : (<Link to={"/login"}>
-                                <span>Login</span>
-                                
+                            ) : (<Link onClick={() => window.scrollTo({top: 0})} to={"/login"}>
+                                Login
                             </Link>)
                         }
                     </li>                   
