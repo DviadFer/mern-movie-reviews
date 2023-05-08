@@ -8,7 +8,7 @@ function Navbar({user, logout}) {
     const location = useLocation()
     const [navOpen, setNav] = useState(false)
     const [displayLinks, setLinks] = useState(false)
-    const [url, setUrl] = useState(null);
+    const [url, setUrl] = useState('/');
 
     const handleCick = () => {
         setNav(!navOpen)
