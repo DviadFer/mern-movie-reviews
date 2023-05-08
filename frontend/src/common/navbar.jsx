@@ -29,7 +29,7 @@ function Navbar({user, logout}) {
                     </div>
                 </Link>
                 <ul className={`${styles.links} ${displayLinks ? styles.active : ''}`}>
-                    <li onClick={handleCick}><Link className={`${url === ('/movies' || '/') ? styles.activePage : ''}`} onClick={() => window.scrollTo({top: 0})} to={"/movies"}>Movies</Link></li>
+                    <li onClick={handleCick}><Link className={`${['/movies', '/'].includes(url) ? styles.activePage : ''}`} onClick={() => window.scrollTo({top: 0})} to={"/movies"}>Movies</Link></li>
                     <li onClick={handleCick}><Link className={`${url === '/tutorial' ? styles.activePage : ''}`} onClick={() => window.scrollTo({top: 0})} to={"/tutorial"}>Tutorial</Link></li>
                     <li className={styles.login} onClick={handleCick}>
                         { user 
