@@ -22,7 +22,6 @@ const MovieSingle = props => {
         MovieDataService.get(id)
         .then(response => {
             setMovie(response.data)
-            console.log(response.data)
         })
         .catch(e =>{
             console.log(e)
@@ -88,7 +87,6 @@ const MovieSingle = props => {
         </div>
         <h2>Reviews</h2>
         <div className={styles.reviewContainer}>
-            {console.log('Estado de las reviews', movie.reviews)}
             {movie.reviews.length != 0 ? (
                 movie.reviews.map((review, index) =>{
                     return (

@@ -38,7 +38,6 @@ const AddReview = props => {
             data.review_id = props.reviewEdit._id
             MovieDataService.updateReview(data)
             .then(response =>{
-                console.log(response.data)
                 props.refreshMovieData()
                 handleShowForm()
             })
@@ -48,7 +47,6 @@ const AddReview = props => {
         } else {
             MovieDataService.createReview(data)
             .then(response => {
-                console.log(response.data)
                 props.refreshMovieData()
                 handleShowForm()
                 setReview(initialReviewState)
@@ -69,7 +67,6 @@ const AddReview = props => {
         data.review_id = props.reviewEdit._id
         MovieDataService.deleteReview(data.review_id, props.user.id)
         .then(response => {
-            console.log('Review eliminada', response.data)
             props.refreshMovieData()
         })
         .catch(e => {
