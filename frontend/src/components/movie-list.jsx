@@ -52,7 +52,6 @@ function MoviesList (props) {
     const retrieveRatings = () =>{
         MovieDataService.getRatings()
         .then(response =>{
-            console.log(response.data)
             setRatings(["All Ratings"].concat(response.data))
         })
         .catch( e =>{
@@ -73,7 +72,6 @@ function MoviesList (props) {
         MovieDataService.find(query,by,currentPage)
         .then(response =>{
             setMovies(response.data.movies)
-            console.log(response.data.total_results)
             setTotalResults(response.data.total_results)
         })
         .catch(e =>{

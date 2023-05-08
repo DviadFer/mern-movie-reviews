@@ -3,7 +3,6 @@ import styles from './tutorial.module.scss'
 
 
 function Tutorial (props) {
-    console.log(props.user)
     return (
         <div className={styles.tutorial}>
             <h1>Welcome to Meteor Reviews!</h1>

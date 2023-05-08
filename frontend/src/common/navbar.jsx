@@ -1,17 +1,23 @@
-import { Link } from "react-router-dom/cjs/react-router-dom.min"
-import { useState } from "react"
+import { Link, useLocation } from "react-router-dom/cjs/react-router-dom.min"
+import { useState, useEffect } from "react"
 import styles from './navbar.module.scss'
 import { FaBars, FaTimes } from 'react-icons/fa'
 
 function Navbar({user, logout}) {
 
+    const location = useLocation()
     const [navOpen, setNav] = useState(false)
     const [displayLinks, setLinks] = useState(false)
+    const [url, setUrl] = useState(null);
 
     const handleCick = () => {
         setNav(!navOpen)
         setLinks(!displayLinks)
     }
+
+    useEffect(() => {
+        setUrl(location.pathname);
+    }, [location]);
 
     return (
         <nav className={styles.navbar}>
@@ -23,15 +29,15 @@ function Navbar({user, logout}) {
                     </div>
                 </Link>
                 <ul className={`${styles.links} ${displayLinks ? styles.active : ''}`}>
-                    <li onClick={handleCick}><Link onClick={() => window.scrollTo({top: 0})} to={"/movies"}>Movies</Link></li>
-                    <li onClick={handleCick}><Link onClick={() => window.scrollTo({top: 0})} to={"/tutorial"}>Tutorial</Link></li>
+                    <li onClick={handleCick}><Link className={`${url === ('/movies' || '/') ? styles.activePage : ''}`} onClick={() => window.scrollTo({top: 0})} to={"/movies"}>Movies</Link></li>
+                    <li onClick={handleCick}><Link className={`${url === '/tutorial' ? styles.activePage : ''}`} onClick={() => window.scrollTo({top: 0})} to={"/tutorial"}>Tutorial</Link></li>
                     <li className={styles.login} onClick={handleCick}>
                         { user 
                             ? (<>
-                                <a onClick={logout}>Logout </a>
+                                <a onClick={logout}>Logout</a>
                                 <img src={`/avatar/${user.name.toLowerCase().replace(/ /g, "-")}.webp`} alt="profile" />
                             </>
-                            ) : (<Link onClick={() => window.scrollTo({top: 0})} to={"/login"}>
+                            ) : (<Link className={`${url === '/login' ? styles.activePage : ''}`} onClick={() => window.scrollTo({top: 0})} to={"/login"}>
                                 Login
                             </Link>)
                         }
