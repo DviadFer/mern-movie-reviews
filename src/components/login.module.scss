@@ -12,15 +12,18 @@
     background-color: #303134;
     margin-bottom: 25px;
     .text {
-        p:last-child {
-            margin-top: 1rem;
+        p {
             line-height: 1.5rem;
+            &:last-child {
+                margin-top: 1rem;
+            }
         }
     }
     svg {
         font-size: 25px;
         float: left;
         shape-outside: circle(50%);
+        margin-top: 10px;
         margin-right: 20px;
     }
 }
